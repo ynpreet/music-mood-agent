@@ -1,0 +1,2 @@
+# demo.py uses ONLY the Python standard library (json, sys, pathlib).
+# Nothing to install. Run:  python3 demo.py
