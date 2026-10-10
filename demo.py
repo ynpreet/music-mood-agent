@@ -31,7 +31,8 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 
 # ---------------------------------------------------------------------------
-# Data: mock Spotify-style catalog (local JSON, no API) + session memory.
+# Data: real Spotify track catalog (verified track IDs; metadata in local
+# JSON, no API) + session memory.
 # In a real deployment, SESSION_MEMORY would be a persistent store
 # (database / vector store) that grows with every listening session.
 # ---------------------------------------------------------------------------
@@ -41,12 +42,13 @@ SESSION_MEMORY = {
     "past_sessions": [
         {
             "situation": "studying for finals late at night",
-            "worked": ["reflection eternal", "A Walk", "Clair de Lune"],
-            "takeaway": "focus-tagged lo-fi/downtempo tracks sustained concentration",
+            "worked": ["Suite bergamasque, CD 82: III. Clair de lune",
+                       "Experience", "Gymnopédie No. 1"],
+            "takeaway": "solo piano/ambient focus tracks sustained concentration",
         },
         {
             "situation": "winding down after a hard day",
-            "worked": ["Better Together", "Only Time"],
+            "worked": ["River Flows in You", "Weightless"],
             "takeaway": "low-energy acoustic tracks beat silence for recovery",
         },
     ]
@@ -59,7 +61,7 @@ MEMORY_BOOST = 8  # extra score points for tracks a past session proved out
 # TOOL: search_catalog -- the Playlist-Builder's only tool.
 # ---------------------------------------------------------------------------
 def search_catalog(mood=None, energy_min=None, energy_max=None, valence_min=None):
-    """Filter the mock catalog. Returns tracks sorted by title (deterministic)."""
+    """Filter the catalog. Returns tracks sorted by title (deterministic)."""
     hits = []
     for t in CATALOG:
         if mood and not any(m in t["mood"] for m in mood):
@@ -389,7 +391,7 @@ BANNER = "=" * 70
 def main():
     print(BANNER)
     print("  MUSIC MOOD AGENT -- Demo 4 of 4 - Agentic AI Workshop")
-    print("  Mock Spotify-style catalog (%d tracks) - fully offline, stdlib only" % len(CATALOG))
+    print("  Real Spotify track catalog (%d tracks) - metadata local, stdlib only" % len(CATALOG))
     print(BANNER)
     print()
 

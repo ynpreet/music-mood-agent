@@ -1,1 +1,453 @@
-[{"artist":"Jack Johnson","energy":3,"genre":"Acoustic Folk","mood":["calm","happy"],"tempo":82,"title":"Better Together","valence":8},{"artist":"Norah Jones","energy":2,"genre":"Jazz Pop","mood":["calm","melancholic"],"tempo":88,"title":"Don't Know Why","valence":5},{"artist":"Coldplay","energy":3,"genre":"Alternative","mood":["calm","melancholic"],"tempo":75,"title":"The Scientist","valence":4},{"artist":"Enya","energy":1,"genre":"New Age","mood":["calm"],"tempo":90,"title":"Only Time","valence":6},{"artist":"Bon Iver","energy":2,"genre":"Indie Folk","mood":["calm","melancholic"],"tempo":85,"title":"Skinny Love","valence":4},{"artist":"Sam Smith","energy":3,"genre":"Soul Pop","mood":["calm","melancholic"],"tempo":84,"title":"Stay With Me","valence":4},{"artist":"Ed Sheeran","energy":3,"genre":"Pop","mood":["calm","happy"],"tempo":79,"title":"Thinking Out Loud","valence":8},{"artist":"Bob Marley","energy":5,"genre":"Reggae","mood":["happy","calm"],"tempo":76,"title":"Three Little Birds","valence":9},{"artist":"John Mayer","energy":4,"genre":"Blues Rock","mood":["calm","melancholic"],"tempo":80,"title":"Slow Dancing in a Burning Room","valence":4},{"artist":"Pharrell Williams","energy":8,"genre":"Pop","mood":["happy","energetic"],"tempo":160,"title":"Happy","valence":9},{"artist":"ABBA","energy":9,"genre":"Disco Pop","mood":["happy","energetic"],"tempo":101,"title":"Dancing Queen","valence":9},{"artist":"Earth, Wind & Fire","energy":9,"genre":"Funk/Soul","mood":["happy","energetic"],"tempo":126,"title":"September","valence":10},{"artist":"Katrina and the Waves","energy":9,"genre":"Pop Rock","mood":["happy","energetic"],"tempo":110,"title":"Walking on Sunshine","valence":10},{"artist":"Queen","energy":10,"genre":"Rock","mood":["happy","energetic"],"tempo":156,"title":"Don't Stop Me Now","valence":9},{"artist":"Dua Lipa","energy":9,"genre":"Dance Pop","mood":["happy","energetic"],"tempo":103,"title":"Levitating","valence":9},{"artist":"Stevie Wonder","energy":8,"genre":"Funk/Soul","mood":["happy","energetic"],"tempo":114,"title":"Sir Duke","valence":9},{"artist":"Daft Punk","energy":8,"genre":"Disco/Funk","mood":["energetic","happy"],"tempo":116,"title":"Get Lucky","valence":9},{"artist":"The Weeknd","energy":9,"genre":"Synth Pop","mood":["energetic","happy"],"tempo":171,"title":"Blinding Lights","valence":8},{"artist":"Mark Ronson ft. Bruno Mars","energy":9,"genre":"Funk Pop","mood":["energetic","happy"],"tempo":115,"title":"Uptown Funk","valence":9},{"artist":"Journey","energy":8,"genre":"Rock","mood":["energetic","happy"],"tempo":119,"title":"Don't Stop Believin'","valence":9},{"artist":"AC/DC","energy":9,"genre":"Hard Rock","mood":["energetic"],"tempo":94,"title":"Back in Black","valence":7},{"artist":"Imagine Dragons","energy":9,"genre":"Pop Rock","mood":["energetic"],"tempo":125,"title":"Believer","valence":6},{"artist":"Survivor","energy":9,"genre":"Rock","mood":["energetic"],"tempo":109,"title":"Eye of the Tiger","valence":6},{"artist":"Queen","energy":8,"genre":"Rock","mood":["energetic"],"tempo":81,"title":"We Will Rock You","valence":8},{"artist":"Shania Twain","energy":9,"genre":"Country Pop","mood":["energetic","happy"],"tempo":126,"title":"Man! I Feel Like a Woman!","valence":9},{"artist":"Tom Petty","energy":7,"genre":"Heartland Rock","mood":["happy","energetic"],"tempo":110,"title":"Free Fallin'","valence":8},{"artist":"Ludovico Einaudi","energy":3,"genre":"Modern Classical","mood":["focus","calm"],"tempo":110,"title":"Nuvole Bianche","valence":7},{"artist":"Claude Debussy","energy":1,"genre":"Classical","mood":["focus","calm"],"tempo":72,"title":"Clair de Lune","valence":6},{"artist":"Johann Pachelbel","energy":2,"genre":"Classical","mood":["focus","calm"],"tempo":92,"title":"Canon in D","valence":7},{"artist":"Brian Eno","energy":1,"genre":"Ambient","mood":["focus","calm"],"tempo":60,"title":"An Ending (Ascent)","valence":5},{"artist":"Tycho","energy":4,"genre":"Downtempo","mood":["focus","calm"],"tempo":105,"title":"A Walk","valence":7},{"artist":"Nujabes","energy":3,"genre":"Lo-fi Hip-Hop","mood":["focus","calm"],"tempo":93,"title":"reflection eternal","valence":7},{"artist":"Khruangbin","energy":5,"genre":"Psychedelic Funk","mood":["focus","happy"],"tempo":90,"title":"Maria Tambien","valence":8},{"artist":"Miles Davis","energy":4,"genre":"Jazz","mood":["focus","calm"],"tempo":135,"title":"So What","valence":6},{"artist":"Antonio Vivaldi","energy":6,"genre":"Classical","mood":["focus","energetic"],"tempo":132,"title":"Spring (Allegro)","valence":8},{"artist":"Adele","energy":4,"genre":"Pop Ballad","mood":["melancholic"],"tempo":68,"title":"Someone Like You","valence":3},{"artist":"Radiohead","energy":6,"genre":"Alternative Rock","mood":["melancholic"],"tempo":92,"title":"Creep","valence":3},{"artist":"Billie Eilish","energy":3,"genre":"Dream Pop","mood":["melancholic","calm"],"tempo":78,"title":"ocean eyes","valence":4},{"artist":"Simon & Garfunkel","energy":2,"genre":"Folk Rock","mood":["melancholic","calm"],"tempo":100,"title":"The Sound of Silence","valence":4},{"artist":"Lewis Capaldi","energy":4,"genre":"Pop Ballad","mood":["melancholic"],"tempo":110,"title":"Someone You Loved","valence":3}]
+[
+ {
+  "title": "Happy - From \"Despicable Me 2\"",
+  "artist": "Pharrell Williams",
+  "energy": 8,
+  "genre": "Pop Funk",
+  "mood": [
+   "happy",
+   "energetic"
+  ],
+  "tempo": 160,
+  "valence": 9,
+  "spotify_id": "60nZcImufyMA1MKQY3dcCH"
+ },
+ {
+  "title": "CAN'T STOP THE FEELING!",
+  "artist": "Justin Timberlake",
+  "energy": 8,
+  "genre": "Pop",
+  "mood": [
+   "happy",
+   "energetic"
+  ],
+  "tempo": 113,
+  "valence": 9,
+  "spotify_id": "5HbavZblicLkZumPJRQEfp"
+ },
+ {
+  "title": "Good as Hell",
+  "artist": "Lizzo",
+  "energy": 7,
+  "genre": "Hip-Hop Pop",
+  "mood": [
+   "happy"
+  ],
+  "tempo": 96,
+  "valence": 9,
+  "spotify_id": "3Yh9lZcWyKrK9GjbhuS0hR"
+ },
+ {
+  "title": "Walking On Sunshine",
+  "artist": "Katrina and the Waves",
+  "energy": 9,
+  "genre": "Pop Rock",
+  "mood": [
+   "happy",
+   "energetic"
+  ],
+  "tempo": 110,
+  "valence": 10,
+  "spotify_id": "05wIrZSwuaVWhcv5FfqeH0"
+ },
+ {
+  "title": "Uptown Funk",
+  "artist": "Mark Ronson ft. Bruno Mars",
+  "energy": 9,
+  "genre": "Funk Pop",
+  "mood": [
+   "happy",
+   "energetic"
+  ],
+  "tempo": 115,
+  "valence": 9,
+  "spotify_id": "0KL92ISbPmnglIUNpVkJtF"
+ },
+ {
+  "title": "Someone Like You",
+  "artist": "Adele",
+  "energy": 3,
+  "genre": "Pop Ballad",
+  "mood": [
+   "sad",
+   "melancholic"
+  ],
+  "tempo": 134,
+  "valence": 3,
+  "spotify_id": "3bNv3VuUOKgrf5hu3YcuRo"
+ },
+ {
+  "title": "Fix You",
+  "artist": "Coldplay",
+  "energy": 3,
+  "genre": "Alternative Rock",
+  "mood": [
+   "sad",
+   "melancholic"
+  ],
+  "tempo": 138,
+  "valence": 4,
+  "spotify_id": "7LVHVU3tWfcxj5aiPFEW4Q"
+ },
+ {
+  "title": "Hurt",
+  "artist": "Johnny Cash",
+  "energy": 2,
+  "genre": "Country",
+  "mood": [
+   "sad",
+   "melancholic"
+  ],
+  "tempo": 95,
+  "valence": 2,
+  "spotify_id": "28cnXtME493VX9NOw9cIUh"
+ },
+ {
+  "title": "Skinny Love",
+  "artist": "Bon Iver",
+  "energy": 3,
+  "genre": "Indie Folk",
+  "mood": [
+   "sad",
+   "melancholic"
+  ],
+  "tempo": 84,
+  "valence": 4,
+  "spotify_id": "3B3eOgLJSqPEA0RfboIQVM"
+ },
+ {
+  "title": "The Night We Met",
+  "artist": "Lord Huron",
+  "energy": 3,
+  "genre": "Indie Folk",
+  "mood": [
+   "sad",
+   "melancholic"
+  ],
+  "tempo": 108,
+  "valence": 4,
+  "spotify_id": "4iH31mAwPbG9SSPN6nHWgu"
+ },
+ {
+  "title": "Weightless",
+  "artist": "Marconi Union",
+  "energy": 1,
+  "genre": "Ambient",
+  "mood": [
+   "calm",
+   "focus"
+  ],
+  "tempo": 60,
+  "valence": 7,
+  "spotify_id": "6kkwzB6hXLIONkEk9JciA6"
+ },
+ {
+  "title": "River Flows in You",
+  "artist": "Yiruma",
+  "energy": 3,
+  "genre": "Contemporary Classical",
+  "mood": [
+   "calm",
+   "focus"
+  ],
+  "tempo": 64,
+  "valence": 7,
+  "spotify_id": "34NU0X1xEufuXyEG8WFNyT"
+ },
+ {
+  "title": "Holocene",
+  "artist": "Bon Iver",
+  "energy": 4,
+  "genre": "Indie Folk",
+  "mood": [
+   "calm"
+  ],
+  "tempo": 80,
+  "valence": 6,
+  "spotify_id": "35KiiILklye1JRRctaLUb4"
+ },
+ {
+  "title": "Bloom - Bonus Track",
+  "artist": "The Paper Kites",
+  "energy": 4,
+  "genre": "Indie Folk",
+  "mood": [
+   "calm",
+   "happy"
+  ],
+  "tempo": 110,
+  "valence": 7,
+  "spotify_id": "1HMQmOWrkieKYWlFsjUP3D"
+ },
+ {
+  "title": "Mystery of Love",
+  "artist": "Sufjan Stevens",
+  "energy": 3,
+  "genre": "Indie Folk",
+  "mood": [
+   "calm",
+   "romantic"
+  ],
+  "tempo": 105,
+  "valence": 6,
+  "spotify_id": "5GbVzc6Ex5LYlLJqzRQhuy"
+ },
+ {
+  "title": "Thunderstruck",
+  "artist": "AC/DC",
+  "energy": 10,
+  "genre": "Hard Rock",
+  "mood": [
+   "energetic",
+   "workout"
+  ],
+  "tempo": 133,
+  "valence": 8,
+  "spotify_id": "57bgtoPSgt236HzfBOd8kj"
+ },
+ {
+  "title": "Don't Stop Me Now",
+  "artist": "Queen",
+  "energy": 9,
+  "genre": "Rock",
+  "mood": [
+   "energetic",
+   "happy"
+  ],
+  "tempo": 156,
+  "valence": 9,
+  "spotify_id": "2jNCofCae2Txs2zaegNLOt"
+ },
+ {
+  "title": "Titanium",
+  "artist": "David Guetta ft. Sia",
+  "energy": 9,
+  "genre": "EDM",
+  "mood": [
+   "energetic",
+   "workout"
+  ],
+  "tempo": 126,
+  "valence": 8,
+  "spotify_id": "76RMBip0a441vqKusCL8se"
+ },
+ {
+  "title": "Levels",
+  "artist": "Avicii",
+  "energy": 9,
+  "genre": "EDM",
+  "mood": [
+   "energetic",
+   "workout"
+  ],
+  "tempo": 126,
+  "valence": 8,
+  "spotify_id": "0HNXNtbtsy5o3oqpSrkbse"
+ },
+ {
+  "title": "Shut Up and Dance",
+  "artist": "WALK THE MOON",
+  "energy": 9,
+  "genre": "Pop Rock",
+  "mood": [
+   "energetic",
+   "happy"
+  ],
+  "tempo": 128,
+  "valence": 9,
+  "spotify_id": "4kbj5MwxO1bq9wjT5g9HaA"
+ },
+ {
+  "title": "Suite bergamasque, CD 82: III. Clair de lune",
+  "artist": "Claude Debussy, Seong-Jin Cho",
+  "energy": 2,
+  "genre": "Classical",
+  "mood": [
+   "focus",
+   "calm"
+  ],
+  "tempo": 66,
+  "valence": 7,
+  "spotify_id": "3aflqY3isjShFUHoiS1QbR"
+ },
+ {
+  "title": "Experience",
+  "artist": "Ludovico Einaudi",
+  "energy": 3,
+  "genre": "Contemporary Classical",
+  "mood": [
+   "focus",
+   "calm"
+  ],
+  "tempo": 100,
+  "valence": 7,
+  "spotify_id": "1BncfTJAWxrsxyT9culBrj"
+ },
+ {
+  "title": "Nuvole Bianche",
+  "artist": "Ludovico Einaudi",
+  "energy": 3,
+  "genre": "Contemporary Classical",
+  "mood": [
+   "focus",
+   "calm"
+  ],
+  "tempo": 110,
+  "valence": 7,
+  "spotify_id": "3kdYjD9OBBpOTWLYQNKgmw"
+ },
+ {
+  "title": "Gymnopédie No. 1",
+  "artist": "Erik Satie",
+  "energy": 2,
+  "genre": "Classical",
+  "mood": [
+   "focus",
+   "calm"
+  ],
+  "tempo": 72,
+  "valence": 6,
+  "spotify_id": "5NGtFXVpXSvwunEIGeviY3"
+ },
+ {
+  "title": "Time - Alan Walker Remix",
+  "artist": "Hans Zimmer, Alan Walker",
+  "energy": 6,
+  "genre": "Electro House",
+  "mood": [
+   "focus",
+   "energetic"
+  ],
+  "tempo": 128,
+  "valence": 7,
+  "spotify_id": "2cLctibEEM4f05yJv719i6"
+ },
+ {
+  "title": "Perfect",
+  "artist": "Ed Sheeran",
+  "energy": 4,
+  "genre": "Pop Ballad",
+  "mood": [
+   "romantic",
+   "calm"
+  ],
+  "tempo": 95,
+  "valence": 8,
+  "spotify_id": "0tgVpDi06FyKpA1z0VMD4v"
+ },
+ {
+  "title": "All of Me",
+  "artist": "John Legend",
+  "energy": 4,
+  "genre": "R&B Ballad",
+  "mood": [
+   "romantic"
+  ],
+  "tempo": 120,
+  "valence": 8,
+  "spotify_id": "3U4isOIWM3VvDubwSI3y7a"
+ },
+ {
+  "title": "At Last",
+  "artist": "Etta James",
+  "energy": 3,
+  "genre": "Soul",
+  "mood": [
+   "romantic",
+   "calm"
+  ],
+  "tempo": 100,
+  "valence": 8,
+  "spotify_id": "4JvKYNMaSHle3YXp4Tsots"
+ },
+ {
+  "title": "Thinking out Loud",
+  "artist": "Ed Sheeran",
+  "energy": 5,
+  "genre": "Pop Ballad",
+  "mood": [
+   "romantic"
+  ],
+  "tempo": 79,
+  "valence": 8,
+  "spotify_id": "0k4nrrCsMr0Tao5WvQ8Osq"
+ },
+ {
+  "title": "Make You Feel My Love",
+  "artist": "Adele",
+  "energy": 3,
+  "genre": "Pop Ballad",
+  "mood": [
+   "romantic",
+   "calm"
+  ],
+  "tempo": 108,
+  "valence": 7,
+  "spotify_id": "273QnyCvJB65rScHJ1nPZb"
+ },
+ {
+  "title": "Eye of the Tiger",
+  "artist": "Survivor",
+  "energy": 9,
+  "genre": "Rock",
+  "mood": [
+   "workout",
+   "energetic"
+  ],
+  "tempo": 109,
+  "valence": 8,
+  "spotify_id": "2KH16WveTQWT6KOG9Rg6e2"
+ },
+ {
+  "title": "Stronger",
+  "artist": "Kanye West",
+  "energy": 8,
+  "genre": "Hip-Hop",
+  "mood": [
+   "workout",
+   "energetic"
+  ],
+  "tempo": 104,
+  "valence": 7,
+  "spotify_id": "0j2T0R9dR9qdJYsB7ciXhf"
+ },
+ {
+  "title": "Lose Yourself",
+  "artist": "Eminem",
+  "energy": 9,
+  "genre": "Hip-Hop",
+  "mood": [
+   "workout",
+   "energetic"
+  ],
+  "tempo": 171,
+  "valence": 7,
+  "spotify_id": "5Z01UMMf7V1o0MzF86s6WJ"
+ },
+ {
+  "title": "Can't Hold Us (feat. Ray Dalton)",
+  "artist": "Macklemore & Ryan Lewis",
+  "energy": 9,
+  "genre": "Hip-Hop",
+  "mood": [
+   "workout",
+   "energetic"
+  ],
+  "tempo": 147,
+  "valence": 8,
+  "spotify_id": "3bidbhpOYeV4knp8AIu8Xn"
+ },
+ {
+  "title": "POWER",
+  "artist": "Kanye West",
+  "energy": 8,
+  "genre": "Hip-Hop",
+  "mood": [
+   "workout",
+   "energetic"
+  ],
+  "tempo": 154,
+  "valence": 7,
+  "spotify_id": "2gZUPNdnz5Y45eiGxpHGSc"
+ }
+]
