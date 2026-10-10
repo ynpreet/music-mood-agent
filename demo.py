@@ -24,6 +24,7 @@ byte-identical output on every run (the 10-run test log proves it).
 """
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -119,16 +120,96 @@ FOCUS_PROFILE = {
     ],
 }
 
-# Rule order = priority order. First rule whose keywords all... no --
-# first rule with ANY keyword hit wins. (Deterministic: fixed list.)
+# Rule order = priority order. First rule with ANY keyword hit wins.
+# (Deterministic: fixed list.) Typo variants are included on purpose:
+# students type "hapy", "stresed", "studdy" -- the agent should still hear them.
+SAD_PROFILE = {
+    "current": "low, heavy-hearted",
+    "desired": "lighter, gently held",
+    "desired_word": "lighter",
+    "arc": [
+        {"role": "MATCH",   "tags": ["melancholic", "sad"], "te": 4, "tv": 3},
+        {"role": "BRIDGE",  "tags": ["melancholic", "calm"], "te": 4, "tv": 5},
+        {"role": "LIFT",    "tags": ["calm", "happy"],       "te": 5, "tv": 7},
+        {"role": "SUSTAIN", "tags": ["happy", "calm"],       "te": 4, "tv": 8},
+        {"role": "SUSTAIN", "tags": ["calm"],                "te": 3, "tv": 7},
+    ],
+}
+
+WORKOUT_PROFILE = {
+    "current": "gearing up, needs fuel",
+    "desired": "pumped, locked in",
+    "desired_word": "pumped",
+    "arc": [
+        {"role": "MATCH",   "tags": ["energetic"],            "te": 7, "tv": 7},
+        {"role": "LIFT",    "tags": ["energetic", "workout"], "te": 8, "tv": 8},
+        {"role": "PEAK",    "tags": ["workout", "energetic"], "te": 9, "tv": 9},
+        {"role": "SUSTAIN", "tags": ["energetic", "workout"], "te": 8, "tv": 8},
+        {"role": "SUSTAIN", "tags": ["workout"],              "te": 7, "tv": 8},
+    ],
+}
+
+ROMANTIC_PROFILE = {
+    "current": "tender, wants the mood set",
+    "desired": "romance in the air",
+    "desired_word": "romance",
+    "arc": [
+        {"role": "MATCH",   "tags": ["calm", "romantic"],  "te": 4, "tv": 7},
+        {"role": "BRIDGE",  "tags": ["romantic"],          "te": 4, "tv": 8},
+        {"role": "LIFT",    "tags": ["romantic", "happy"], "te": 5, "tv": 8},
+        {"role": "SUSTAIN", "tags": ["romantic", "calm"],  "te": 4, "tv": 8},
+        {"role": "SUSTAIN", "tags": ["romantic"],          "te": 3, "tv": 7},
+    ],
+}
+
+# Honest fallback: when nothing matches, say so. Never fake a confident label.
+FALLBACK_PROFILE = {
+    "current": "unrecognized -- couldn't place the mood",
+    "desired": "a balanced mix, honestly labeled",
+    "desired_word": "balance",
+    "arc": [
+        {"role": "MATCH",   "tags": ["calm"],               "te": 4, "tv": 6},
+        {"role": "BRIDGE",  "tags": ["happy", "calm"],       "te": 5, "tv": 7},
+        {"role": "LIFT",    "tags": ["energetic", "happy"],  "te": 7, "tv": 8},
+        {"role": "SUSTAIN", "tags": ["calm", "happy"],       "te": 4, "tv": 7},
+        {"role": "SUSTAIN", "tags": ["focus", "calm"],       "te": 3, "tv": 6},
+    ],
+}
+
 SITUATION_RULES = [
-    ({"focus", "study", "exam", "concentrate", "deadline", "assignment",
-      "homework", "distracted"}, FOCUS_PROFILE, "focus/study"),
+    ({"workout", "gym", "running", "run", "jog", "jogging", "exercise",
+      "training", "marathon", "cardio", "lift weights", "leg day"},
+     WORKOUT_PROFILE, "workout"),
+    ({"romantic", "date night", "anniversary", "valentine", "valentines",
+      "candlelit", "dinner date", "in love", "crush", "slow dance"},
+     ROMANTIC_PROFILE, "romantic"),
+    ({"focus", "study", "studdy", "focuse", "exam", "concentrate",
+      "concetrate", "deadline", "assignment", "homework", "distracted"},
+     FOCUS_PROFILE, "focus/study"),
     ({"road trip", "roadtrip", "drive", "friends", "party", "weekend",
-      "trip", "car ride"}, PARTY_PROFILE, "road-trip/party"),
-    ({"stress", "stressed", "stressful", "exhausted", "tired", "burnt",
-      "burnout", "long day", "drained", "overwhelm"}, STRESS_PROFILE, "wind-down"),
+      "trip", "car ride", "hapy", "hapyy", "celebrate", "celebration"},
+     PARTY_PROFILE, "road-trip/party"),
+    ({"sad", "sadd", "heartbreak", "heartbroken", "lonely", "crying",
+      "blue", "depressed", "down bad", "miss him", "miss her", "miss them",
+      "breakup", "broke up"},
+     SAD_PROFILE, "low/sad"),
+    ({"stress", "stressed", "stresed", "stressful", "exhausted", "exhosted",
+      "tired", "burnt", "burnout", "burntout", "long day", "drained",
+      "overwhelm", "overwhelmed", "anxious", "anxiety", "winding down",
+      "wind down", "relax", "calm down"},
+     STRESS_PROFILE, "wind-down"),
 ]
+
+
+def _kw_hit(lowered, kw):
+    """Keyword hit with word boundaries for very short keywords.
+
+    Prevents 'sad' (3 letters) from firing inside 'cansado', while keeping
+    substring matching for longer phrases like 'road trip' or 'date night'.
+    """
+    if len(kw) <= 3:
+        return re.search(r"\b" + re.escape(kw) + r"\b", lowered) is not None
+    return kw in lowered
 
 
 def interpret(situation_text):
@@ -146,13 +227,16 @@ def interpret(situation_text):
     profile, label = None, None
     hits = []
     for keywords, prof, lab in SITUATION_RULES:
-        hits = sorted(k for k in keywords if k in lowered)
+        hits = sorted(k for k in keywords if _kw_hit(lowered, k))
         if hits:
             profile, label = prof, lab
             break
-    if profile is None:  # fallback: gentle calm arc
-        profile, label, hits = STRESS_PROFILE, "wind-down (fallback)", []
+    if profile is None:  # honest fallback: never fake a confident label
+        profile, label, hits = FALLBACK_PROFILE, "unrecognized -- balanced mix", []
     print("  STEP 2: keyword hits %s -> situation type '%s'" % (hits, label))
+    if not hits:
+        print("  HONESTY NOTE: I couldn't place that mood, so I'm building a")
+        print("  balanced mix across moods instead of guessing wrong.")
 
     mem = SESSION_MEMORY["past_sessions"]
     print("  STEP 3: session memory loaded: %d past sessions" % len(mem))
@@ -211,6 +295,22 @@ def build_playlist(profile):
         hits = [t for t in search_catalog(mood=slot["tags"], energy_min=e_min,
                                           energy_max=e_max, valence_min=v_min)
                 if t["title"] not in used]
+        if not hits:  # widen progressively; never crash on an empty slot
+            print("    -> 0 hits at strict filters; widening energy window...")
+            hits = [t for t in search_catalog(
+                mood=slot["tags"],
+                energy_min=max(1, slot["te"] - 5),
+                energy_max=min(10, slot["te"] + 5))
+                if t["title"] not in used]
+        if not hits:
+            print("    -> still 0; dropping energy/valence filters (mood tags only)...")
+            hits = [t for t in search_catalog(mood=slot["tags"])
+                    if t["title"] not in used]
+        if not hits:
+            print("    -> still 0; taking any unused catalog track (last resort)...")
+            hits = [t for t in CATALOG if t["title"] not in used]
+        if not hits:
+            raise RuntimeError("catalog exhausted: more slots than tracks")
         print("    -> %d hits" % len(hits))
 
         best, best_score, best_boosted = None, None, False
