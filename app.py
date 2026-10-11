@@ -31,6 +31,87 @@ COND_RE = re.compile(
     r"kidney disease|ckd|heart disease|depression|asthma|arthritis|copd|hyperlipidemia)"
 )
 
+# ---- your-request checks: constraints the user names in plain words ----
+# The catalog has NO lyrics/vocal, explicit-content, or tempo-filter metadata,
+# so some constraints can't be honestly verified. Parse them out and say so
+# instead of silently ignoring them or faking compliance.
+GUARANTEE_RE = re.compile(
+    r"(guarantee|i guarantee|promise (me|that|this)|"
+    r"(reduce|lower|cut|relieve|get rid of).{0,30}(anxiety|stress|depression|panic|insomnia)|"
+    r"(improve|increase|boost).{0,30}(productivity|focus|concentration|mood|wellbeing).{0,12}(by|%)|"
+    r"(cure|treat) my (anxiety|depression|stress|insomnia)|therapist|as (a |my )?therap)",
+    re.IGNORECASE,
+)
+LYRICS_RE = re.compile(
+    r"(no lyrics|lyric-?free|without lyrics|no vocals|instrumental(-only| only)?)",
+    re.IGNORECASE,
+)
+EXPLICIT_RE = re.compile(
+    r"(no explicit|explicit[- ]free|clean (version|lyrics|only)|no swearing|no profanity)",
+    re.IGNORECASE,
+)
+LOW_ENERGY_RE = re.compile(
+    r"(no (high[- ]?energy|energetic)|not too energetic|without anything too energetic|"
+    r"nothing too energetic|low[- ]energy|keep it (calm|mellow|gentle|soft))",
+    re.IGNORECASE,
+)
+NO_REPEAT_RE = re.compile(
+    r"(no repeat|no repeats|no duplicates|all unique|unique tracks|don'?t repeat)",
+    re.IGNORECASE,
+)
+MEMORY_OPTOUT_RE = re.compile(
+    r"(don'?t let my (previous|past|last)( session| time)? override|"
+    r"don'?t use (my |the )?memory|"
+    r"ignore (my |the )?(previous|past|last)( session| time)|"
+    r"no memory( boost)?|forget (my |the )?(past|previous|last))",
+    re.IGNORECASE,
+)
+
+
+def _request_checks(situation):
+    """Return (memory_off, energy_cap, check_lines).
+
+    Parses the user's plain-words constraints + safety phrases so the run can
+    be transparent about what it can and can't enforce. Pure parsing: no I/O.
+    """
+    memory_off = MEMORY_OPTOUT_RE.search(situation) is not None
+    energy_cap = 4 if LOW_ENERGY_RE.search(situation) else None
+    constraints = []
+    if LYRICS_RE.search(situation):
+        constraints.append(
+            ("no lyrics", False,
+             "the catalog has no lyrics/vocal metadata, so lyric-free tracks can't be verified"))
+    if EXPLICIT_RE.search(situation):
+        constraints.append(
+            ("no explicit content", False,
+             "the catalog has no explicit-content flags, so I can't filter for it"))
+    if energy_cap is not None:
+        constraints.append(
+            ("no high-energy tracks", True,
+             "every arc slot is capped at energy <= 4"))
+    if NO_REPEAT_RE.search(situation):
+        constraints.append(
+            ("no repeats", True,
+             "the builder never picks the same track twice in one playlist"))
+    guarantee = GUARANTEE_RE.search(situation) is not None
+
+    lines = []
+    if guarantee or constraints or memory_off:
+        lines.append("YOUR-REQUEST CHECKS:")
+        if guarantee:
+            lines.append("  HONEST BOUNDARY: I can't guarantee measurable outcomes")
+            lines.append("  (\"reduce anxiety by X%\", \"improve productivity by Y%\").")
+            lines.append("  No playlist can promise that -- this demo is entertainment,")
+            lines.append("  not therapy. The arc below is built for listening only.")
+        for label, enforced, note in constraints:
+            mark = "ENFORCED" if enforced else "CAN'T VERIFY"
+            lines.append("  [%s] %s -- %s" % (mark, label, note))
+        if memory_off:
+            lines.append("  [MEMORY OFF] you asked to skip past sessions -- the +8")
+            lines.append("  memory boost is OFF for this run; scoring starts fresh.")
+        lines.append("")
+    return memory_off, energy_cap, lines
+
 def _capture_canned():
     """Run the canned demo exactly as before (subprocess), capture stdout."""
     proc = subprocess.run(
@@ -74,7 +155,11 @@ def run_custom(params):
         print()
         profile = DEMO.interpret(situation)
         print()
-        picks = DEMO.build_playlist(profile)
+        memory_off, energy_cap, check_lines = _request_checks(situation)
+        for ln in check_lines:
+            print(ln)
+        picks = DEMO.build_playlist(profile, use_memory=not memory_off,
+                                    energy_cap=energy_cap)
         print()
         DEMO.explain(picks, profile)
     tracks = [
