@@ -2,7 +2,7 @@
 
 **Demo 4 of 4 · Agentic AI Workshop**
 
-> **Educational demo.** `tracks.json` holds 40 real, recognizable tracks
+> **Educational demo.** `tracks.json` holds 35 real, recognizable tracks
 > with approximate teaching values for energy, valence, and tempo — not
 > measured audio features. Mood detection is keyword-based; this is
 > entertainment, not therapy.
@@ -71,7 +71,7 @@ and need to study — each producing a 5-song emotional-arc playlist.
 
 - Situation text in plain words (the three scripted situations, or any
   text the keyword rules can match).
-- `tracks.json`: 40 tracks with artist, title, genre, mood tags
+- `tracks.json`: 35 tracks with artist, title, genre, mood tags
   (happy/calm/energetic/melancholic/focus), energy 1–10, valence 1–10,
   tempo (BPM).
 - `SESSION_MEMORY`: two pre-seeded past sessions (study-finals lo-fi win;
@@ -136,7 +136,7 @@ title → artist).
 combining arc role + energy/valence/tempo/genre into plain language, with
 a memory note when a pick was boosted.
 
-**The catalog** (`tracks.json`): 40 real, recognizable tracks. Each has
+**The catalog** (`tracks.json`): 35 real, recognizable tracks. Each has
 artist, title, genre, mood tags (`happy`/`calm`/`energetic`/`melancholic`/
 `focus`), energy 1–10, valence (positivity) 1–10, and tempo (BPM). Energy,
 valence, and BPM values are approximate teaching values, not measured audio
@@ -214,7 +214,7 @@ surprises you on stage.
 |---|---|
 | `demo.py` | The terminal demo — 3 agents, 3 situations. `python3 demo.py` |
 | `app.py` | The Chrome web UI — serves the demo in the browser on port 8005. `python3 app.py` |
-| `tracks.json` | The 40-track mock catalog (Spotify-style fields). |
+| `tracks.json` | The 35-track real-Spotify catalog. |
 | `requirements.txt` | Intentionally empty — stdlib only, nothing to install |
 | `TEST-LOG.md` | 10 consecutive runs: exit codes + output hashes (10/10 byte-identical) |
 | `RUBRIC.md` | Self-score against the hackathon judging rubric, with evidence per score |
@@ -258,7 +258,7 @@ last demonstrating the memory boost from a prior session.
   study-type situations (`"focus"` in the arc's middle slot); wind-down
   and party runs don't borrow study memory.
 - **Narrow slot windows still return hits.** Each slot searches energy
-  ±3 and valence ≥ tv−3 — wide enough that the 40-track catalog always
+  ±3 and valence ≥ tv−3 — wide enough that the 35-track catalog always
   yields candidates for every arc role.
 
 **Reliability gate.** `TEST-LOG.md` records 10 consecutive runs of
@@ -300,7 +300,7 @@ sitting — and the arc guarantee (not the model) is the lesson.
 |---|---|---|
 | **Domain researcher** | The emotional-arc design and mood taxonomy | The three mood profiles (STRESS/PARTY/FOCUS) with 5-slot arcs, mood-tag vocabulary (happy/calm/energetic/melancholic/focus), role-line templates (MATCH/BRIDGE/LIFT/SETTLE/FOCUS/SUSTAIN/PEAK) |
 | **Agent engineer** | The 3-agent pipeline, tool, and memory | `interpret`, `build_playlist`, `explain`; `search_catalog` tool; `score_track` formula; the +8 `MEMORY_BOOST` application rule; the no-keyword fallback arc |
-| **Data engineer** | The mock catalog and its schema | `tracks.json` (40 tracks: artist/title/genre/mood/energy/valence/tempo), `SESSION_MEMORY` structure, the mock→real Spotify field-mapping table in section 10 |
+| **Data engineer** | The mock catalog and its schema | `tracks.json` (35 tracks: artist/title/genre/mood/energy/valence/tempo), `SESSION_MEMORY` structure, the mock→real Spotify field-mapping table in section 10 |
 | **UX / storyteller** | The three situations and the stage narrative | Speaker notes (the vibe question, the memory money-shot), the three-situation table, the Chrome web UI (`app.py`) with highlighted agent trace |
 | **QA** | Determinism gate and playlist invariants | `TEST-LOG.md` 10/10 byte-identical gate, no-duplicate-picks guarantee, correct arc shapes per situation, memory-boost verification on Situation 3 |
 
@@ -311,7 +311,7 @@ sitting — and the arc guarantee (not the model) is the lesson.
 - **Mood detection is keyword-based, not real understanding** — sarcasm or
   mixed feelings ("happy but exhausted") will be misread. Say this out
   loud.
-- **40 tracks can't cover anyone's taste** — a real system needs millions;
+- **35 tracks can't cover anyone's taste** — a real system needs millions;
   the catalog is a teaching stand-in.
 - **The memory is pre-seeded, not learned live** — a real version would
   update weights from what you actually finish listening to vs. skip.
