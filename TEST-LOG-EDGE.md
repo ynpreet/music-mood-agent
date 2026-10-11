@@ -1,7 +1,10 @@
 # Music Mood Agent — Edge-Case Test Log (Hardening Wave)
 
-Date: 2026-10-10. Catalog expanded: 36 → 60 tracks across 7 moods
-(happy, sad, calm, energetic, focused, romantic, workout).
+Date: 2026-10-10. Catalog: 35 real Spotify tracks across 8 moods
+(happy, sad, calm, energetic, focus, romantic, workout, melancholic).
+(Correction 2026-10-11: an earlier draft of this log misstated the count
+as "36 → 60"; the catalog was 40 mock tracks at initial commit and has
+been 35 real Spotify tracks since the Spotify-catalog commit.)
 Mood interpreter hardened: typo tolerance (hapy/happpy, sadd, energtic,
 romatic, worokut, focussed, clam), mixed-mood splitting ("sad but need
 energy" → sad + energetic), empty/gibberish → honest "couldn't place that
@@ -46,6 +49,8 @@ mood — here's a balanced mix" (never a fake confident label).
 
 ## Failures found and fixed
 1. Mixed moods previously surfaced only the first mood — now all detected
-   moods contribute. 2. Track-count copy said "36 tracks" — updated to 60.
+   moods contribute. 2. Track-count copy said "36 tracks" — corrected: the catalog is 35 real
+   Spotify tracks (it was never 36 or 60; the "60" figure in an earlier
+   draft of this log was an error).
 3. Malformed JSON caused RemoteDisconnected — fixed, now returns honest
    empty-params response.
