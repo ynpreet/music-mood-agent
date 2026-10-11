@@ -267,8 +267,14 @@ def score_track(track, slot, memory_boost_titles):
     return score, boosted
 
 
-def build_playlist(profile):
-    """Agent 2. Prints PLAN + steps, uses the search_catalog tool, returns picks."""
+def build_playlist(profile, *, use_memory=True, energy_cap=None):
+    """Agent 2. Prints PLAN + steps, uses the search_catalog tool, returns picks.
+
+    use_memory=False: skip the +8 memory boost (the user asked to ignore past
+    sessions). energy_cap=int: clamp every slot's target energy to that ceiling
+    (e.g. the user asked for nothing high-energy). Both default to the
+    historical behavior, so the canned demo output is byte-identical.
+    """
     print("[Agent 2 - Playlist-Builder]  PLAN:")
     print("  1. Translate the emotional arc into 5 slot targets (energy, valence).")
     print("  2. For each slot: TOOL search_catalog(filters) -> score hits -> pick best unused.")
@@ -276,7 +282,7 @@ def build_playlist(profile):
     print()
 
     memory_titles = set()
-    if "focus" in profile["arc"][2]["tags"]:  # study-type situation
+    if use_memory and "focus" in profile["arc"][2]["tags"]:  # study-type situation
         past = SESSION_MEMORY["past_sessions"][0]
         memory_titles = set(past["worked"])
         print("  MEMORY BOOST: past session '%s' worked with lo-fi/focus tracks"
@@ -287,13 +293,16 @@ def build_playlist(profile):
 
     picks, used = [], set()
     for i, slot in enumerate(profile["arc"], start=1):
-        e_min = max(1, slot["te"] - 3)
-        e_max = min(10, slot["te"] + 3)
-        v_min = max(1, slot["tv"] - 3)
+        te = slot["te"] if energy_cap is None else min(slot["te"], energy_cap)
+        # score against the (possibly clamped) target so scoring stays honest
+        eff_slot = dict(slot, te=te) if energy_cap is not None else slot
+        e_min = max(1, te - 3)
+        e_max = min(10, te + 3)
         print("  STEP 2.%d  SLOT %d [%s]: target energy~%d, valence~%d, tags=%s"
-              % (i, i, slot["role"], slot["te"], slot["tv"], slot["tags"]))
+              % (i, i, slot["role"], te, slot["tv"], slot["tags"]))
         print("    TOOL CALL: search_catalog(mood=%s, energy %d-%d, valence>=%d)"
-              % (slot["tags"], e_min, e_max, v_min))
+              % (slot["tags"], e_min, e_max, max(1, slot["tv"] - 3)))
+        v_min = max(1, slot["tv"] - 3)
         hits = [t for t in search_catalog(mood=slot["tags"], energy_min=e_min,
                                           energy_max=e_max, valence_min=v_min)
                 if t["title"] not in used]
@@ -301,8 +310,8 @@ def build_playlist(profile):
             print("    -> 0 hits at strict filters; widening energy window...")
             hits = [t for t in search_catalog(
                 mood=slot["tags"],
-                energy_min=max(1, slot["te"] - 5),
-                energy_max=min(10, slot["te"] + 5))
+                energy_min=max(1, te - 5),
+                energy_max=min(10, te + 5))
                 if t["title"] not in used]
         if not hits:
             print("    -> still 0; dropping energy/valence filters (mood tags only)...")
@@ -317,7 +326,7 @@ def build_playlist(profile):
 
         best, best_score, best_boosted = None, None, False
         for t in hits:
-            sc, boosted = score_track(t, slot, memory_titles)
+            sc, boosted = score_track(t, eff_slot, memory_titles)
             key = (sc, t["title"].lower(), t["artist"].lower())
             if best is None or key > (best_score, best["title"].lower(), best["artist"].lower()):
                 best, best_score, best_boosted = t, sc, boosted
